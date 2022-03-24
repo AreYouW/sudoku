@@ -5,7 +5,7 @@ sys.setrecursionlimit(10000)
 
 grid = [[random.randrange(0, 10) for i in range(9)] for j in range(9)]
 
-test_invalid_board = [
+test_invalid_grid = [
     [0,0,4,0,6,0,0,0,5],
     [7,8,0,4,0,0,0,2,0],
     [0,0,2,6,0,1,0,7,8],
@@ -17,7 +17,7 @@ test_invalid_board = [
     [0,2,0,0,0,7,4,0,0],
 ]
 
-test_valid_board = [
+test_valid_grid = [
     [7,8,0,4,0,0,1,2,0],
     [6,0,0,0,7,5,0,0,9],
     [0,0,0,6,0,1,0,7,8],
@@ -39,25 +39,24 @@ def do_sudoku(grid):
         print("no valid soln ")
 
 def solve(grid):
+    valid_numbers = [1,2,3,4,5,6,7,8,9]
     next_empty = get_empty_value(grid)
     if not next_empty:
         return True
-    else:
-        row, col = next_empty
 
-    for i in range(1, 10):
-        if validate(grid, i, next_empty):
-            grid[row][col] = i
+    for i in valid_numbers:
+        if validate_square(grid, i, next_empty):
+            grid[next_empty[0]][next_empty[1]] = i
 
             if solve(grid):
                 return True
 
-        grid[row][col] = 0
+        grid[next_empty[0]][next_empty[1]] = 0
 
     return False
 
 
-def validate(grid, number: int, position: tuple):
+def validate_square(grid, number: int, position: tuple):
 
     for i in range(len(grid[0])):
         if grid[position[0]][i] == number and position[1] != i:
@@ -100,5 +99,6 @@ def get_empty_value(grid):
     return None
 
 
-do_sudoku(test_valid_board)
-do_sudoku(test_invalid_board)
+do_sudoku(test_valid_grid)
+# do_sudoku(test_invalid_grid)
+# do_sudoku(grid)
