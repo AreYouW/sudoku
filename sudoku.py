@@ -4,8 +4,6 @@ import copy as cp
 sys.setrecursionlimit(10000)
 
 
-grid = [[random.randrange(0, 10) for i in range(9)] for j in range(9)]
-
 empty_grid = [[0 for i in range(9)] for j in range(9)]
 
 
@@ -114,3 +112,6 @@ def get_empty_value(grid):
 
 def get_random_cell():
     return (random.randrange(1, 9), random.randrange(1, 9))
+
+
+do_sudoku(make_solvable_grid(48))
