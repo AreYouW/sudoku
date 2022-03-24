@@ -19,6 +19,7 @@ def make_solvable_grid(num_to_remove):
         grid[cell[0]][cell[1]] = 0
         copy = cp.deepcopy(grid)
         if not solve(copy):
+            i += 1
             grid[cell[0]][cell[1]] = value
     return grid
 
