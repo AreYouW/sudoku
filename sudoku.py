@@ -31,7 +31,7 @@ test_valid_grid = [
 
 empty_grid = [[0 for i in range(9)] for j in range(9)]
 
-def generate_grid(grid):
+def generate_full_valid_grid(grid):
     valid_numbers = [1,2,3,4,5,6,7,8,9]
     random_cell = (random.randrange(1, 9),random.randrange(1, 9))
     random.shuffle(valid_numbers)
@@ -39,9 +39,11 @@ def generate_grid(grid):
         for x in valid_numbers:
             grid[random_cell[0]][random_cell[1]] = x
             if solve(grid):
-                generate_grid(grid)
-                
-        grid[random_cell[0]][random_cell[1]] = 0
+                generate_full_valid_grid(grid)
+
+        next_empty = get_empty_value(grid)
+        if next_empty:        
+            grid[random_cell[0]][random_cell[1]] = 0
     return grid
 
 
@@ -115,7 +117,7 @@ def get_empty_value(grid):
                 return (i, j)
     return None
 
-a = generate_grid(empty_grid)
+a = generate_full_valid_grid(empty_grid)
 print_grid(a)
 # do_sudoku(test_valid_grid)
 # do_sudoku(test_invalid_grid)
