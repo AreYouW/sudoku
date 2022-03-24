@@ -6,31 +6,8 @@ sys.setrecursionlimit(10000)
 
 grid = [[random.randrange(0, 10) for i in range(9)] for j in range(9)]
 
-test_invalid_grid = [
-    [0,0,4,0,6,0,0,0,5],
-    [7,8,0,4,0,0,0,2,0],
-    [0,0,2,6,0,1,0,7,8],
-    [6,1,0,0,7,5,0,0,9],
-    [0,0,7,5,4,0,0,6,1],
-    [0,0,1,7,5,0,9,3,0],
-    [0,7,0,3,0,0,0,1,0],
-    [0,4,0,2,0,6,0,0,7],
-    [0,2,0,0,0,7,4,0,0],
-]
-
-test_valid_grid = [
-    [7,8,0,4,0,0,1,2,0],
-    [6,0,0,0,7,5,0,0,9],
-    [0,0,0,6,0,1,0,7,8],
-    [0,0,7,0,4,0,2,6,0],
-    [0,0,1,0,5,0,9,3,0],
-    [9,0,4,0,6,0,0,0,5],
-    [0,7,0,3,0,0,0,1,2],
-    [1,2,0,0,0,7,4,0,0],
-    [0,4,9,2,0,6,0,0,7]
-]
-
 empty_grid = [[0 for i in range(9)] for j in range(9)]
+
 
 def make_solvable_grid(num_to_remove):
     cell_positions = [(row, col) for row in range(9) for col in range(9)]
@@ -45,10 +22,9 @@ def make_solvable_grid(num_to_remove):
             grid[cell[0]][cell[1]] = value
     return grid
 
-    
 
 def generate_full_valid_grid(grid):
-    valid_numbers = [1,2,3,4,5,6,7,8,9]
+    valid_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     random.shuffle(valid_numbers)
     random_cell = get_random_cell()
     if grid[random_cell[0]][random_cell[1]] == 0:
@@ -58,7 +34,7 @@ def generate_full_valid_grid(grid):
                 generate_full_valid_grid(grid)
 
         next_empty = get_empty_value(grid)
-        if next_empty:        
+        if next_empty:
             grid[random_cell[0]][random_cell[1]] = 0
     return grid
 
@@ -72,8 +48,9 @@ def do_sudoku(grid):
     else:
         print("no valid soln ")
 
+
 def solve(grid):
-    valid_numbers = [1,2,3,4,5,6,7,8,9]
+    valid_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     random.shuffle(valid_numbers)
     next_empty = get_empty_value(grid)
     if not next_empty:
@@ -133,17 +110,6 @@ def get_empty_value(grid):
                 return (i, j)
     return None
 
-def get_random_cell(): 
-    return (random.randrange(1, 9),random.randrange(1, 9))
 
-
-
-
-a = make_solvable_grid(48)
-print_grid(a)
-# do_sudoku(a)
-#a = generate_full_valid_grid(empty_grid) 
-#print_grid(a)
-# do_sudoku(test_valid_grid)
-# do_sudoku(test_invalid_grid)
-# do_sudoku(grid)
+def get_random_cell():
+    return (random.randrange(1, 9), random.randrange(1, 9))
