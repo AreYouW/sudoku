@@ -1,5 +1,6 @@
 import random
 import sys
+import copy as cp
 sys.setrecursionlimit(10000)
 
 
@@ -31,10 +32,25 @@ test_valid_grid = [
 
 empty_grid = [[0 for i in range(9)] for j in range(9)]
 
+def make_solvable_grid(num_to_remove):
+    cell_positions = [(row, col) for row in range(9) for col in range(9)]
+    random.shuffle(cell_positions)
+    grid = generate_full_valid_grid(empty_grid)
+    for i in range(num_to_remove):
+        cell = cell_positions[i]
+        value = grid[cell[0]][cell[1]]
+        grid[cell[0]][cell[1]] = 0
+        copy = cp.deepcopy(grid)
+        if not solve(copy):
+            grid[cell[0]][cell[1]] = value
+    return grid
+
+    
+
 def generate_full_valid_grid(grid):
     valid_numbers = [1,2,3,4,5,6,7,8,9]
-    random_cell = (random.randrange(1, 9),random.randrange(1, 9))
     random.shuffle(valid_numbers)
+    random_cell = get_random_cell()
     if grid[random_cell[0]][random_cell[1]] == 0:
         for x in valid_numbers:
             grid[random_cell[0]][random_cell[1]] = x
@@ -117,8 +133,17 @@ def get_empty_value(grid):
                 return (i, j)
     return None
 
-a = generate_full_valid_grid(empty_grid)
+def get_random_cell(): 
+    return (random.randrange(1, 9),random.randrange(1, 9))
+
+
+
+
+a = make_solvable_grid(48)
 print_grid(a)
+# do_sudoku(a)
+#a = generate_full_valid_grid(empty_grid) 
+#print_grid(a)
 # do_sudoku(test_valid_grid)
 # do_sudoku(test_invalid_grid)
 # do_sudoku(grid)
